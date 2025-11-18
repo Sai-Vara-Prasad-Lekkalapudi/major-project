@@ -64,3 +64,13 @@ Imputation resolved all missing values.
 SMOTE produced balanced training sets for robust learning.
 
 IQR Clipping and Scaling normalized feature space.
+
+XGBoost Hyperparameter Tuning
+
+I used RandomizedSearchCV to find the best hyperparameters for XGBoost and retrained the model.
+
+After tuning, I compared the optimized model with the baseline.
+
+ The optimized model didn’t improve much accuracy and AUC were slightly lower than the baseline.
+
+ Tuning is useful, but default parameters sometimes already work well.
