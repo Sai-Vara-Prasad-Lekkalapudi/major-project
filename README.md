@@ -1,76 +1,153 @@
-# Financial Feature Optimization for Corporate Bankruptcy Prediction Using Gradient Boosting
-Overview
-This project analyzes and optimizes feature selection for predicting corporate bankruptcy using the Polish Companies Bankruptcy dataset and advanced machine learning (gradient boosting) techniques. It focuses on identifying the most important financial indicators for early bankruptcy prediction, evaluating the effect of feature selection and dimensionality reduction strategies, and addressing common challenges in financial data like class imbalance, missing data, and outlier effects.
+Financial Feature Optimization for Corporate Bankruptcy Prediction
+Using Gradient Boosting Models on the Polish Companies Bankruptcy Dataset
 
-Dataset
-Source: Polish Companies Bankruptcy Data (UCI Machine Learning Repository)
+📌 Project Overview
 
-Files: 5 forecast horizons (1-year to 5-year to bankruptcy)
+This project investigates which financial indicators are most influential in predicting corporate bankruptcy, and how techniques like feature selection, dimensionality reduction, and hyperparameter tuning affect model performance.
 
-Each file: 7027-10503 samples, 64 numerical attributes (Attr1-Attr64), 1 binary target (class: 0 = not bankrupt, 1 = bankrupt)
+I used the Polish Companies Bankruptcy Dataset from the UCI Machine Learning Repository, which contains financial ratios for companies 1–5 years prior to bankruptcy.
 
-Project Goals
-Research Question: Which financial indicators are most influential in predicting corporate bankruptcy, and how does feature selection affect model performance?
+My goal was to:
 
-Objectives:
+Identify key financial predictors of bankruptcy
 
-Identify top financial indicators affecting bankruptcy risk.
+Evaluate how boosting models perform across different forecast horizons
 
-Compare model accuracy and interpretability with various feature selection and dimensionality reduction techniques.
+Analyze how PCA and preprocessing improve interpretability
 
-Address real-world dataset challenges (missing values, outlier effects, class imbalance).
+Compare model performance between baseline and optimized versions
 
-Project Steps
-1. Data Loading & Initial Exploration
-Load all 5 datasets (1-5 year prediction files).
+🧪 Research Question
 
-Consistent schema across files: Attr1–Attr64 + class label.
+“Which financial indicators most influence bankruptcy prediction, and how does feature selection affect model performance across different years?"
 
-Statistics and data info reviewed; observed significant class imbalance and missing values.
+📊 Dataset
 
-2. Data Preprocessing
-Missing Value Imputation: Used median imputation for all numeric features (to preserve key financial indicators).
+Source: UCI ML Repository
+🔗 https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
 
-Class Label Cleaning: Converted binary labels to numeric (0/1).
+The dataset is split into five files:
 
-3. Exploratory Data Analysis (EDA)
-Class Distribution: Visualizations show heavy imbalance (fewer bankrupt companies).
+Dataset	Horizon	Rows	Features
+1year.arff	Bankruptcy next year	7027	64
+2year.arff	2-year horizon	10,500+	64
+3year.arff	3-year horizon	10,800+	64
+4year.arff	4-year horizon	9,000+	64
+5year.arff	5-year horizon	8,000+	64
 
-Missing Data Visualization: Heatmaps and summary tables.
+The class imbalance is severe (≈3–5% bankrupt firms), making this a challenging real-world classification problem.
 
-Feature Distribution: Boxplots for important attributes segmented by class.
+🛠 Methodology
+✔ Data Preprocessing
 
-Correlation Analysis: Heatmaps for top influential features.
+I applied a fully automated, multi-step pipeline:
 
-4. Data Preparation
-Class Imbalance Handling: SMOTE (Synthetic Minority Over-sampling Technique) to oversample the minority (bankrupt) class for balanced training.
+Median imputation (missing values reduced to 0)
 
-Outlier Treatment: Applied IQR-based clipping to limit extreme financial attribute outliers.
+Outlier removal using IQR-based clipping
 
-Feature Scaling: StandardScaler for model input standardization.
+Feature scaling using StandardScaler
 
-5. Feature Selection & Modeling
-(Intended workflow—customize based on your code output)
+Dimensionality reduction with PCA (95% variance retained)
 
-Test Feature Selection: Recursive Feature Elimination (RFE), PCA, SHAP.
+Class imbalance correction using SMOTE
 
-Train Gradient Boosting and compare with baseline models (Logistic Regression, SVM, KNN).
+🤖 Machine Learning Models Used
 
-Evaluate impact of feature selection on accuracy, AUC, and interpretability.
+I evaluated three gradient boosting models:
 
-Results
-Imputation resolved all missing values.
+1. XGBoost
 
-SMOTE produced balanced training sets for robust learning.
+Handles imbalance well
 
-IQR Clipping and Scaling normalized feature space.
+Strong non-linear modeling
 
-XGBoost Hyperparameter Tuning
+Best mid-term predictor (2–4 years)
 
-I used RandomizedSearchCV to find the best hyperparameters for XGBoost and retrained the model.
+2. LightGBM
 
-After tuning, I compared the optimized model with the baseline.
+Fast, memory efficient
 
- The optimized model didn’t improve much accuracy and AUC were slightly lower than the baseline.
+Best short-term model (1-year dataset)
 
- Tuning is useful, but default parameters sometimes already work well.
+Best 2-year model after tuning
+
+3. CatBoost
+
+Handles noisy and correlated features
+
+Best long-term model (5-year dataset)
+
+🔧 Hyperparameter Tuning
+
+I optimized all models using:
+
+RandomizedSearchCV → broad search
+
+GridSearchCV → fine-tuning
+
+5-fold cross-validation
+
+AUC used as primary metric (due to heavy imbalance)
+
+📈 Best Results After Tuning
+Dataset	Best Model	AUC
+1-Year	LightGBM	0.667
+2-Year	LightGBM	0.609
+3-Year	XGBoost	0.626
+4-Year	XGBoost	0.655
+5-Year	CatBoost	0.816
+
+📌 Conclusion:
+
+Short-term predictions → LightGBM
+
+Mid-term predictions → XGBoost
+
+Long-term predictions → CatBoost
+
+No single model dominates across all horizons, proving financial patterns change over time.
+
+⭐ Feature Importance Analysis
+
+I extracted top features from each model and built a cross-year feature importance matrix.
+
+Key indicators consistently appearing across years:
+
+Attr15 – profitability/efficiency metric
+
+Attr21 – debt servicing capacity
+
+Attr37 – long-term financial stability
+
+Attr59 – liquidity & leverage indicator
+
+These represent stable, long-term signals of financial distress.
+
+📉 Visualizations Included
+
+Missing value bar chart
+
+Outlier before/after boxplots
+
+PCA explained variance plot
+
+SMOTE class balance
+
+Model performance comparison plots
+
+Cross-year feature importance heatmap
+
+All plots are generated via Python (Matplotlib + Seaborn).
+
+🧾 Results Summary
+
+Boosting models outperform classical ML methods on this dataset
+
+Preprocessing (SMOTE + PCA) significantly improves model stability
+
+Feature importance varies by horizon, but key indicators remain consistent
+
+CatBoost and XGBoost excel at long-horizon forecasting
+
+LightGBM gives the best short-term interpretability and accuracy
