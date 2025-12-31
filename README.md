@@ -1,7 +1,7 @@
 Financial Feature Optimization for Corporate Bankruptcy Prediction
 Using Gradient Boosting Models on the Polish Companies Bankruptcy Dataset
 
-📌 Project Overview
+Project Overview
 
 This project investigates which financial indicators are most influential in predicting corporate bankruptcy, and how techniques like feature selection, dimensionality reduction, and hyperparameter tuning affect model performance.
 
@@ -17,14 +17,14 @@ Analyze how PCA and preprocessing improve interpretability
 
 Compare model performance between baseline and optimized versions
 
-🧪 Research Question
+ Research Question
 
 “Which financial indicators most influence bankruptcy prediction, and how does feature selection affect model performance across different years?"
 
-📊 Dataset
+Dataset
 
 Source: UCI ML Repository
-🔗 https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
+ https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
 
 The dataset is split into five files:
 
@@ -37,8 +37,8 @@ Dataset	Horizon	Rows	Features
 
 The class imbalance is severe (≈3–5% bankrupt firms), making this a challenging real-world classification problem.
 
-🛠 Methodology
-✔ Data Preprocessing
+ Methodology
+Data Preprocessing
 
 I applied a fully automated, multi-step pipeline:
 
@@ -52,7 +52,7 @@ Dimensionality reduction with PCA (95% variance retained)
 
 Class imbalance correction using SMOTE
 
-🤖 Machine Learning Models Used
+Machine Learning Models Used
 
 I evaluated three gradient boosting models:
 
@@ -78,7 +78,7 @@ Handles noisy and correlated features
 
 Best long-term model (5-year dataset)
 
-🔧 Hyperparameter Tuning
+Hyperparameter Tuning
 
 I optimized all models using:
 
@@ -90,7 +90,7 @@ GridSearchCV → fine-tuning
 
 AUC used as primary metric (due to heavy imbalance)
 
-📈 Best Results After Tuning
+ Best Results After Tuning
 Dataset	Best Model	AUC
 1-Year	LightGBM	0.667
 2-Year	LightGBM	0.609
@@ -98,17 +98,17 @@ Dataset	Best Model	AUC
 4-Year	XGBoost	0.655
 5-Year	CatBoost	0.816
 
-📌 Conclusion:
+ Conclusion:
 
-Short-term predictions → LightGBM
+Short-term predictions - LightGBM
 
-Mid-term predictions → XGBoost
+Mid-term predictions - XGBoost
 
-Long-term predictions → CatBoost
+Long-term predictions - CatBoost
 
 No single model dominates across all horizons, proving financial patterns change over time.
 
-⭐ Feature Importance Analysis
+Feature Importance Analysis
 
 I extracted top features from each model and built a cross-year feature importance matrix.
 
@@ -124,7 +124,7 @@ Attr59 – liquidity & leverage indicator
 
 These represent stable, long-term signals of financial distress.
 
-📉 Visualizations Included
+ Visualizations Included
 
 Missing value bar chart
 
@@ -140,7 +140,7 @@ Cross-year feature importance heatmap
 
 All plots are generated via Python (Matplotlib + Seaborn).
 
-🧾 Results Summary
+ Results Summary
 
 Boosting models outperform classical ML methods on this dataset
 
