@@ -1,153 +1,145 @@
-Financial Feature Optimization for Corporate Bankruptcy Prediction
-Using Gradient Boosting Models on the Polish Companies Bankruptcy Dataset
+Financial Feature Optimisation for Corporate Bankruptcy Prediction
 
-Project Overview
+Using Gradient Boosting Models and Explainable AI
 
-This project investigates which financial indicators are most influential in predicting corporate bankruptcy, and how techniques like feature selection, dimensionality reduction, and hyperparameter tuning affect model performance.
+📌 Project Overview
 
-I used the Polish Companies Bankruptcy Dataset from the UCI Machine Learning Repository, which contains financial ratios for companies 1–5 years prior to bankruptcy.
+This project develops an end-to-end machine learning pipeline to predict corporate bankruptcy using financial ratio data. The study focuses on identifying the most influential financial indicators and evaluating how feature optimisation and explainability affect model performance across multiple forecasting horizons.
 
-My goal was to:
+I applied modern gradient boosting models (XGBoost, LightGBM, and CatBoost) and combined them with robust preprocessing, hyperparameter optimisation, and SHAP-based explainability to produce accurate, stable, and interpretable bankruptcy prediction models.
 
-Identify key financial predictors of bankruptcy
+🎯 Research Question
 
-Evaluate how boosting models perform across different forecast horizons
+Which financial indicators are most influential in predicting corporate bankruptcy, and how does feature optimisation affect the performance and interpretability of machine learning models across different forecasting horizons?
 
-Analyze how PCA and preprocessing improve interpretability
+📂 Dataset
 
-Compare model performance between baseline and optimized versions
+Source: UCI Machine Learning Repository
 
- Research Question
+Dataset: Polish Companies Bankruptcy Dataset
 
-“Which financial indicators most influence bankruptcy prediction, and how does feature selection affect model performance across different years?"
+Scope:
 
-Dataset
+5 datasets representing 1–5 years before bankruptcy
 
-Source: UCI ML Repository
- https://archive.ics.uci.edu/dataset/365/polish+companies+bankruptcy+data
+64 numerical financial ratios
 
-The dataset is split into five files:
+Binary target variable (class: bankrupt / non-bankrupt)
 
-Dataset	Horizon	Rows	Features
-1year.arff	Bankruptcy next year	7027	64
-2year.arff	2-year horizon	10,500+	64
-3year.arff	3-year horizon	10,800+	64
-4year.arff	4-year horizon	9,000+	64
-5year.arff	5-year horizon	8,000+	64
+Characteristics:
 
-The class imbalance is severe (≈3–5% bankrupt firms), making this a challenging real-world classification problem.
+Strong class imbalance
 
- Methodology
-Data Preprocessing
+No personally identifiable information (fully anonymised)
 
-I applied a fully automated, multi-step pipeline:
+⚙️ Methodology
+1. Exploratory Data Analysis (EDA)
 
-Median imputation (missing values reduced to 0)
+Missing value analysis
 
-Outlier removal using IQR-based clipping
+Class imbalance analysis
 
-Feature scaling using StandardScaler
+Correlation analysis of financial ratios
 
-Dimensionality reduction with PCA (95% variance retained)
+2. Data Pre-Processing
 
-Class imbalance correction using SMOTE
+Median imputation for missing values
 
-Machine Learning Models Used
+Outlier treatment using IQR clipping
 
-I evaluated three gradient boosting models:
+Feature scaling with StandardScaler
 
-1. XGBoost
+Class imbalance handling using SMOTE
 
-Handles imbalance well
+Dimensionality reduction using PCA (95% variance)
 
-Strong non-linear modeling
+3. Model Development
 
-Best mid-term predictor (2–4 years)
+Baseline Models
 
-2. LightGBM
+XGBoost
 
-Fast, memory efficient
+LightGBM
 
-Best short-term model (1-year dataset)
+CatBoost
 
-Best 2-year model after tuning
+Hyperparameter Optimisation
 
-3. CatBoost
+RandomisedSearchCV
 
-Handles noisy and correlated features
+AUC as the primary optimisation metric
 
-Best long-term model (5-year dataset)
+4. Evaluation Metrics
 
-Hyperparameter Tuning
+Accuracy
 
-I optimized all models using:
+Precision
 
-RandomizedSearchCV → broad search
+Recall
 
-GridSearchCV → fine-tuning
+F1-Score
 
-5-fold cross-validation
+AUC (primary metric)
 
-AUC used as primary metric (due to heavy imbalance)
+5. Explainability
 
- Best Results After Tuning
-Dataset	Best Model	AUC
-1-Year	LightGBM	0.667
-2-Year	LightGBM	0.609
-3-Year	XGBoost	0.626
-4-Year	XGBoost	0.655
-5-Year	CatBoost	0.816
+SHAP summary (global importance)
 
- Conclusion:
+SHAP beeswarm (direction + magnitude)
 
-Short-term predictions - LightGBM
+SHAP waterfall (local explanation)
 
-Mid-term predictions - XGBoost
+🏆 Key Results
+Best Tuned Model (Overall)
 
-Long-term predictions - CatBoost
+Model: LightGBM_Tuned
 
-No single model dominates across all horizons, proving financial patterns change over time.
+Mean AUC (1–5 years): 0.984
 
-Feature Importance Analysis
+Best balance of:
 
-I extracted top features from each model and built a cross-year feature importance matrix.
+Predictive performance
 
-Key indicators consistently appearing across years:
+Stability across time horizons
 
-Attr15 – profitability/efficiency metric
+Computational efficiency
 
-Attr21 – debt servicing capacity
+Key Observations
 
-Attr37 – long-term financial stability
+Bankruptcy risk can be predicted several years in advance
 
-Attr59 – liquidity & leverage indicator
+Gradient boosting models outperform traditional baselines
 
-These represent stable, long-term signals of financial distress.
+A small number of components (e.g., PC1, PC3, PC10) dominate predictions
 
- Visualizations Included
+SHAP explanations make complex models transparent and usable in practice
 
-Missing value bar chart
+📊 Visualisations Included
 
-Outlier before/after boxplots
+AUC comparison (baseline vs tuned)
 
-PCA explained variance plot
+Heatmaps and trend plots across forecasting horizons
 
-SMOTE class balance
+Confusion matrices and ROC curves
 
-Model performance comparison plots
+SHAP feature importance, beeswarm, and waterfall plots
 
-Cross-year feature importance heatmap
+🧠 Practical Applications
 
-All plots are generated via Python (Matplotlib + Seaborn).
+Credit risk assessment
 
- Results Summary
+Investment screening
 
-Boosting models outperform classical ML methods on this dataset
+Regulatory early-warning systems
 
-Preprocessing (SMOTE + PCA) significantly improves model stability
+Financial decision support tools
 
-Feature importance varies by horizon, but key indicators remain consistent
+🔮 Future Work
 
-CatBoost and XGBoost excel at long-horizon forecasting
+Incorporate macroeconomic indicators
 
-LightGBM gives the best short-term interpretability and accuracy
+Improve raw feature interpretability without PCA
+
+Evaluate generalisability on datasets from other countries
+
+Explore cost-sensitive learning approaches
