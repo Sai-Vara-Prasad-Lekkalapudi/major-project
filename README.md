@@ -1,18 +1,18 @@
-Financial Feature Optimisation for Corporate Bankruptcy Prediction
+# Financial Feature Optimisation for Corporate Bankruptcy Prediction
 
 Using Gradient Boosting Models and Explainable AI
 
-📌 Project Overview
+#  Project Overview
 
 This project develops an end-to-end machine learning pipeline to predict corporate bankruptcy using financial ratio data. The study focuses on identifying the most influential financial indicators and evaluating how feature optimisation and explainability affect model performance across multiple forecasting horizons.
 
 I applied modern gradient boosting models (XGBoost, LightGBM, and CatBoost) and combined them with robust preprocessing, hyperparameter optimisation, and SHAP-based explainability to produce accurate, stable, and interpretable bankruptcy prediction models.
 
-🎯 Research Question
+# 🎯 Research Question
 
 Which financial indicators are most influential in predicting corporate bankruptcy, and how does feature optimisation affect the performance and interpretability of machine learning models across different forecasting horizons?
 
-📂 Dataset
+# 📂 Dataset
 
 Source: UCI Machine Learning Repository
 
@@ -32,7 +32,7 @@ Strong class imbalance
 
 No personally identifiable information (fully anonymised)
 
-⚙️ Methodology
+# ⚙️ Methodology
 1. Exploratory Data Analysis (EDA)
 
 Missing value analysis
@@ -89,7 +89,7 @@ SHAP beeswarm (direction + magnitude)
 
 SHAP waterfall (local explanation)
 
-🏆 Key Results
+# 🏆 Key Results
 Best Tuned Model (Overall)
 
 Model: LightGBM_Tuned
@@ -114,7 +114,7 @@ A small number of components (e.g., PC1, PC3, PC10) dominate predictions
 
 SHAP explanations make complex models transparent and usable in practice
 
-📊 Visualisations Included
+# 📊 Visualisations Included
 
 AUC comparison (baseline vs tuned)
 
@@ -124,7 +124,7 @@ Confusion matrices and ROC curves
 
 SHAP feature importance, beeswarm, and waterfall plots
 
-🧠 Practical Applications
+# 🧠 Practical Applications
 
 Credit risk assessment
 
@@ -134,7 +134,7 @@ Regulatory early-warning systems
 
 Financial decision support tools
 
-🔮 Future Work
+# 🔮 Future Work
 
 Incorporate macroeconomic indicators
 
