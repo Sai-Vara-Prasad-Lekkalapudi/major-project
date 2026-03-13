@@ -1,61 +1,89 @@
-# Financial Feature Optimisation for Corporate Bankruptcy Prediction
+Financial Feature Optimization for Corporate Bankruptcy Prediction using Gradient Boosting Models
+Project Overview
 
-Using Gradient Boosting Models and Explainable AI
+This project investigates the use of machine learning techniques to predict corporate bankruptcy using financial ratio data. The objective is to identify the most influential financial indicators associated with bankruptcy risk and evaluate the predictive performance of gradient boosting models across multiple forecasting horizons (1–5 years before bankruptcy).
 
-#  Project Overview
+An end-to-end machine learning pipeline was implemented including exploratory data analysis, data preprocessing, model training, hyperparameter optimisation, evaluation, and model explainability using SHAP.
 
-This project develops an end-to-end machine learning pipeline to predict corporate bankruptcy using financial ratio data. The study focuses on identifying the most influential financial indicators and evaluating how feature optimisation and explainability affect model performance across multiple forecasting horizons.
+Research Question
 
-I applied modern gradient boosting models (XGBoost, LightGBM, and CatBoost) and combined them with robust preprocessing, hyperparameter optimisation, and SHAP-based explainability to produce accurate, stable, and interpretable bankruptcy prediction models.
+Which financial indicators are most influential in predicting corporate bankruptcy, and how does model optimisation affect predictive performance across different forecasting horizons?
 
-# 🎯 Research Question
+Dataset
 
-Which financial indicators are most influential in predicting corporate bankruptcy, and how does feature optimisation affect the performance and interpretability of machine learning models across different forecasting horizons?
+The project uses the Polish Companies Bankruptcy Dataset from the UCI Machine Learning Repository.
 
-# 📂 Dataset
+Dataset characteristics:
 
-Source: UCI Machine Learning Repository
+64 financial ratio features
 
-Dataset: Polish Companies Bankruptcy Dataset
+1 binary target variable (bankrupt or non-bankrupt)
 
-Scope:
+Five datasets representing 1–5 years before bankruptcy
 
-5 datasets representing 1–5 years before bankruptcy
+Strong class imbalance (bankrupt firms ≈ 3–5%)
 
-64 numerical financial ratios
+Dataset link:
+https://archive.ics.uci.edu/ml/datasets/Polish+companies+bankruptcy+data
 
-Binary target variable (class: bankrupt / non-bankrupt)
+The financial ratios capture several dimensions of corporate financial health:
 
-Characteristics:
+profitability
 
-Strong class imbalance
+liquidity
 
-No personally identifiable information (fully anonymised)
+leverage
 
-# ⚙️ Methodology
+solvency
+
+operational efficiency
+
+Examples of important financial ratios include:
+
+Attr1 – net profit / total assets
+
+Attr7 – operating profit / total assets
+
+Attr27 – working capital / total assets
+
+These ratios are widely used indicators in bankruptcy prediction research.
+
+Project Workflow
 1. Exploratory Data Analysis (EDA)
 
-Missing value analysis
+Initial data exploration was performed to understand dataset structure and quality.
 
-Class imbalance analysis
+Key steps included:
 
-Correlation analysis of financial ratios
+dataset inspection
 
-2. Data Pre-Processing
+missing value analysis
 
-Median imputation for missing values
+class imbalance analysis
 
-Outlier treatment using IQR clipping
+correlation analysis of financial ratios
 
-Feature scaling with StandardScaler
+EDA helped identify multicollinearity between financial variables and confirmed the need for dimensionality reduction.
 
-Class imbalance handling using SMOTE
+2. Data Preprocessing
 
-Dimensionality reduction using PCA (95% variance)
+Several preprocessing steps were applied before model training:
 
-3. Model Development
+Median imputation to handle missing values
 
-Baseline Models
+IQR-based clipping to treat outliers
+
+StandardScaler for feature scaling
+
+SMOTE to address class imbalance
+
+PCA to reduce dimensionality and remove multicollinearity
+
+PCA retained 95% of cumulative explained variance, resulting in approximately 24–25 principal components across forecasting horizons.
+
+Machine Learning Models
+
+Three gradient boosting algorithms were evaluated:
 
 XGBoost
 
@@ -63,13 +91,17 @@ LightGBM
 
 CatBoost
 
-Hyperparameter Optimisation
+Each model was trained using:
 
-RandomisedSearchCV
+Baseline configuration
 
-AUC as the primary optimisation metric
+Hyperparameter tuned configuration
 
-4. Evaluation Metrics
+Models were evaluated separately for each forecasting horizon (1–5 years before bankruptcy).
+
+Model Evaluation
+
+Model performance was evaluated using multiple classification metrics:
 
 Accuracy
 
@@ -81,65 +113,117 @@ F1-Score
 
 AUC (primary metric)
 
-5. Explainability
+Additional evaluation techniques included:
 
-SHAP summary (global importance)
+confusion matrices
 
-SHAP beeswarm (direction + magnitude)
+ROC curves
 
-SHAP waterfall (local explanation)
+AUC comparison plots
 
-# 🏆 Key Results
-Best Tuned Model (Overall)
+AUC was prioritised because it is robust to class imbalance and measures the model’s ability to distinguish between bankrupt and non-bankrupt firms.
 
-Model: LightGBM_Tuned
+Key Results
 
-Mean AUC (1–5 years): 0.984
+The models achieved strong predictive performance across all forecasting horizons.
 
-Best balance of:
+Main findings:
 
-Predictive performance
+AUC values consistently exceeded 0.97
 
-Stability across time horizons
+CatBoost achieved the highest AUC for the 1-year prediction horizon
 
-Computational efficiency
+XGBoost showed the most stable performance across longer horizons
 
-Key Observations
+Hyperparameter tuning produced competitive results, although baseline models already performed strongly
 
-Bankruptcy risk can be predicted several years in advance
+Tuned models achieved average AUC values around 0.985–0.986 across forecasting horizons
 
-Gradient boosting models outperform traditional baselines
+These results indicate that gradient boosting models are highly effective for bankruptcy prediction tasks.
 
-A small number of components (e.g., PC1, PC3, PC10) dominate predictions
+Model Explainability (SHAP)
 
-SHAP explanations make complex models transparent and usable in practice
+SHAP (SHapley Additive Explanations) was used to interpret the model predictions.
 
-# 📊 Visualisations Included
+The analysis revealed that a small number of principal components contributed most strongly to bankruptcy predictions, particularly:
 
-AUC comparison (baseline vs tuned)
+PC1
 
-Heatmaps and trend plots across forecasting horizons
+PC3
 
-Confusion matrices and ROC curves
+PC7
 
-SHAP feature importance, beeswarm, and waterfall plots
+PC10
 
-# 🧠 Practical Applications
+These components were strongly influenced by profitability and liquidity ratios such as Attr1, Attr7, and Attr27, which are key indicators of financial distress.
 
-Credit risk assessment
+Repository Structure
+project/
+│
+├── notebook/
+│   Sai_Bankruptcy_Final_MSc_Notebook_Updated.ipynb
+│
+├── report/
+│   Financial_Bankruptcy_Prediction_Report.pdf
+│
+├── data/
+│   1year.arff
+│   2year.arff
+│   3year.arff
+│   4year.arff
+│   5year.arff
+│
+└── README.md
+Technologies Used
 
-Investment screening
+The project was implemented using:
 
-Regulatory early-warning systems
+Python
 
-Financial decision support tools
+Pandas
 
-# 🔮 Future Work
+NumPy
 
-Incorporate macroeconomic indicators
+Scikit-learn
 
-Improve raw feature interpretability without PCA
+XGBoost
 
-Evaluate generalisability on datasets from other countries
+LightGBM
 
-Explore cost-sensitive learning approaches
+CatBoost
+
+SHAP
+
+Matplotlib
+
+Seaborn
+
+Reproducibility
+
+To reproduce the project results:
+
+Clone the repository
+
+git clone https://github.com/Sai-Vara-Prasad-Lekkalapudi/major-project
+
+Install required libraries
+
+pip install pandas numpy scikit-learn xgboost lightgbm catboost shap seaborn matplotlib
+
+Open the Jupyter notebook
+
+jupyter notebook
+
+Run the notebook cells sequentially to reproduce the analysis, models, and visualisations.
+
+Author
+
+Sai Vara Prasad Lekkalapudi
+MSc Data Science
+University of Hertfordshire
+
+Supervisor: Philip Lucas
+
+Acknowledgement
+
+This project uses the Polish Companies Bankruptcy Dataset from the UCI Machine Learning Repository for academic research purposes.
