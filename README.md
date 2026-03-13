@@ -1,4 +1,5 @@
 Financial Feature Optimization for Corporate Bankruptcy Prediction using Gradient Boosting Models
+
 Project Overview
 
 This project investigates the use of machine learning techniques to predict corporate bankruptcy using financial ratio data. The objective is to identify the most influential financial indicators associated with bankruptcy risk and evaluate the predictive performance of gradient boosting models across multiple forecasting horizons (1–5 years before bankruptcy).
